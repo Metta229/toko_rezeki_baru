@@ -11,16 +11,8 @@ class BarangMasukController extends Controller
 {
     public function index()
     {
-        // Memuat relasi dengan supplier dan barang menggunakan eager loading
-        $barangmasuk = BarangMasuk::with(['supplier', 'barang'])->paginate(5);
-
-        // Membuat data untuk dikirim ke view
-        $data['barangmasuk'] = $barangmasuk;
-
-        // Nama untuk halaman atau judul
+        $data['barangmasuk'] = BarangMasuk::with(['supplier', 'barang'])->paginate(5);
         $data['judul'] = 'Data Barang Masuk';
-
-        // Menampilkan view dengan data
         return view('barangmasuk_index', $data);
     }
 
@@ -45,8 +37,8 @@ class BarangMasukController extends Controller
     {
         // Validasi form input
         $request->validate([
-            'supplier' => 'required',
-            'barang' => 'required',
+            'supplier_id' => 'required',
+            'barang_id' => 'required',
             'tanggal' => 'required|date',
             'stok_masuk' => 'required|numeric|min:1',
             'harga' => 'required|numeric|min:0',
@@ -55,8 +47,8 @@ class BarangMasukController extends Controller
 
         // Menyimpan data barang masuk
         $barangMasuk = new BarangMasuk();
-        $barangMasuk->supplier = $request->supplier;
-        $barangMasuk->barang = $request->barang;
+        $barangMasuk->supplier_id = $request->supplier_id;
+        $barangMasuk->barang_id = $request->barang_id;
         $barangMasuk->tanggal = $request->tanggal;
         $barangMasuk->stok_masuk = $request->stok_masuk;
         $barangMasuk->harga = $request->harga;

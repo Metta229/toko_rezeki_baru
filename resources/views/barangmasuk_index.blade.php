@@ -86,8 +86,8 @@
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $item->tanggal }}</td>
-                                                <td>{{ $item->supplier}}</td>
-                                                <td>{{ $item->barang }}</td>
+                                                <td>{{ $item->supplier->nama_supplier}}</td>
+                                                <td>{{ $item->barang->nama_barang }}</td>
                                                 <td>{{ $item->stok_masuk }}</td>
                                                 <td>{{ number_format($item->harga, 0, ',', '.') }}</td>
                                                 <td>{{ $item->satuan }}</td>
