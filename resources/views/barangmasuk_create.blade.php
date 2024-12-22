@@ -21,16 +21,16 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="supplier">Pilih Supplier <strong style="color: red; font-weight: bold">*Wajib
+                            <label for="supplier_id">Pilih Supplier <strong style="color: red; font-weight: bold">*Wajib
                                     Dipilih</strong></label>
-                            {!! Form::select('supplier', $supplier, null, ['class' => 'form-control', 'placeholder' =>
+                            {!! Form::select('supplier_id', $supplier_id, null, ['class' => 'form-control', 'placeholder' =>
                             'Pilih Supplier']) !!}
                         </div>
 
                         <div class="form-group">
-                            <label for="barang">Pilih Barang <strong style="color: red; font-weight: bold">*Wajib
+                            <label for="barang_id">Pilih Barang <strong style="color: red; font-weight: bold">*Wajib
                                     Dipilih</strong></label>
-                            {!! Form::select('barang', $barang, null, ['class' => 'form-control', 'placeholder' =>
+                            {!! Form::select('barang_id', $barang_id, null, ['class' => 'form-control', 'placeholder' =>
                             'Pilih Barang']) !!}
                         </div>
 

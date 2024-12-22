@@ -27,8 +27,8 @@ class BarangMasukController extends Controller
             'alamat_rute' => 'barangmasuk.store', // Pastikan rute sesuai
             'cara' => 'POST',
             'tombol' => 'Simpan',
-            'supplier' => $supplier, // Data supplier yang diperlukan untuk dropdown
-            'barang' => $barang, // Data barang yang diperlukan untuk dropdown
+            'supplier_id' => $supplier, // Data supplier yang diperlukan untuk dropdown
+            'barang_id' => $barang, // Data barang yang diperlukan untuk dropdown
             'list_satuan' => $data['list_satuan'], // Mengirim list_satuan ke view
         ]);
     }
