@@ -16,9 +16,6 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('bebas') }}/css/sb-admin-2.min.css" rel="stylesheet">
 
-
-
-
 <body id="page-top">
 
     <div id="wrapper">
@@ -31,11 +28,16 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Toko Rezeki Baru</div>
+                <div class="mx-3 sidebar-brand-text">Toko Rezeki Baru</div>
             </a>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                DATA MASTER
+            </div>
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
@@ -45,10 +47,13 @@
                 </a>
             </li>
 
-            @auth
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider">
 
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                DATA TRANSAKSI
+            </div>
             <!-- Nav Item - Barang -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -59,7 +64,7 @@
                     <span>Barang & Supplier</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="py-2 bg-white rounded collapse-inner">
                         <a class="collapse-item" href="/barang">Data Barang</a>
                         <a class="collapse-item" href="/supplier">Data Supplier</a>
                     </div>
@@ -75,7 +80,7 @@
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
+                    <div class="py-2 bg-white rounded collapse-inner">
                         <a class="collapse-item" href="/barangmasuk">Barang Masuk</a>
                         <a class="collapse-item" href="/barangkeluar">Barang Keluar</a>
                     </div>
@@ -83,25 +88,35 @@
             </li>
 
             <!-- Divider -->
-            <hr class="sidebar-divider my-0">
+            <hr class="sidebar-divider">
 
-            <!-- Nav Item - Laporan -->
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                LAPORAN
+            </div>
             <!-- Nav Item - Laporan -->
             <li class="nav-item">
-                <a class="nav-link" href="/laporan">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLaporan"
+                    aria-expanded="false" aria-controls="collapseLaporan">
                     <i class="fas fa-fw fa-file-alt"></i>
-                    <span>Laporan Akhir</span>
+                    <span>Laporan</span>
                 </a>
+                <div id="collapseLaporan" class="collapse">
+                    <div class="py-2 bg-white rounded collapse-inner">
+                        <a class="collapse-item" href="/laporan.barang">Laporan Barang</a>
+                        <a class="collapse-item" href="/barangmasuk">Laporan Barang Masuk</a>
+                        <a class="collapse-item" href="/barangkeluar">Laporan Barang Keluar</a>
+                    </div>
+                </div>
             </li>
 
-            @endauth
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                <button class="border-0 rounded-circle" id="sidebarToggle"></button>
             </div>
         </ul>
         <!-- End of Sidebar -->
@@ -118,7 +133,7 @@
         <!-- End of Page Wrapper -->
 
         <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
+        <a class="rounded scroll-to-top" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
 

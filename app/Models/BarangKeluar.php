@@ -7,16 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class BarangKeluar extends Model
 {
-    protected $table = 'barangkeluar';
+    use HasFactory;
 
-    protected $fillable = [
-        'tanggal',
-        'nama_barang',
-        'stok_keluar',
-    ];
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
 
     public function barang()
     {
-        return $this->belongsTo(Barang::class, 'nama_barang', 'nama_barang');
-    } 
+        return $this->belongsTo(Barang::class, 'barang_id', 'id');
+    }
+
+    protected $table = 'barangkeluar';
+
+    protected $fillable = [
+        'tanggal', 'supplier', 'barang', 'jumlah_keluar', 'harga', 'satuan',
+    ];
+
+    protected $primaryKey = 'id';
 }

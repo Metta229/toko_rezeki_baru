@@ -9,14 +9,16 @@ class BarangController extends Controller
 {
     public function index(Request $request)
     {
+
         // Dapatkan hasil pencarian dengan paginasi
         $query = Barang::query();
         if ($request->has('search') && $request->search) {
             $query->where('nama_barang', 'like', '%'.$request->search.'%')
                 ->orWhere('kode_barang', 'like', '%'.$request->search.'%')
                 ->orWhere('kategori_barang', 'like', '%'.$request->search.'%');
-        }
 
+        }
+        $barang = Barang::orderBy('id', 'desc')->get();
         $barang = $query->paginate(10);
 
         return view('barang_index', compact('barang'));
@@ -24,7 +26,7 @@ class BarangController extends Controller
 
     public function create()
     {
-        $data['list_satuan'] = ['SACHET', 'SLOP', 'BUNGKUS', 'PCS', 'KARUNG', 'DUS', 'KG', 'PACK', 'LITER', 'BOTOL', 'KOTAK', 'KALENG'];
+        $data['list_satuan'] = ['SACHET', 'SLOP', 'BUNGKUS', 'PCS', 'SACK', 'KARUNG', 'DUS', 'KG', 'PACK', 'LITER', 'BOTOL', 'KOTAK', 'KALENG'];
         $data['list_kategori'] = ['SABUN', 'MINYAK', 'BERAS', 'PASTA GIGI', 'ROKOK', 'CEMILAN', 'PENYEDAP RASA', 'KECAP & SAUS', 'SUSU', 'KOPI', 'TEH', 'SHAMPOO', 'SAGU & TEPUNG', 'GULA', 'BIHUN', 'MINUMAN', 'MIE'];
 
         return view('barang_create', $data);
@@ -34,10 +36,12 @@ class BarangController extends Controller
     {
         // Validasi data
         $request->validate([
-            'kode_barang' => 'required',
-            'nama_barang' => 'required',
-            'satuan' => 'required',
-            'harga' => 'required|numeric', // Validasi harga harus ada dan numeric
+            'kode_barang' => 'required|string|max:255',
+            'nama_barang' => 'required|string|max:255',
+            'satuan' => 'required|string',
+            'stok' => 'required|numeric|min:1',
+            'harga_jual' => 'required|numeric', // Validasi harga harus ada dan numeric
+            'harga_beli' => 'required|numeric',
         ]);
 
         // Mapping kategori berdasarkan kode barang
@@ -69,12 +73,17 @@ class BarangController extends Controller
             'kode_barang' => $request->kode_barang,
             'nama_barang' => $request->nama_barang,
             'satuan' => $request->satuan,
+            'stok' => $request->stok,
             'kategori_barang' => $kategori_barang,
-            'harga' => $request->harga, // Pastikan ini berisi angka yang benar
+            'harga_jual' => $request->harga_jual, // Pastikan ini berisi angka yang benar
+            'harga_beli' => $request->harga_beli,
         ]);
 
-        return redirect()->route('barang.index')
-            ->with('success', 'Barang berhasil ditambahkan.');
+        // Flash message untuk notifikasi
+        session()->flash('success', 'Data telah berhasil tersimpan.');
+
+        // Redirect ke halaman tabel barang
+        return redirect()->route('barang.index');
     }
 
     public function laporan()
@@ -88,7 +97,7 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id);
         $data['barang'] = $barang;
-        $data['list_satuan'] = ['SACHET', 'SLOP', 'BUNGKUS', 'PCS', 'KARUNG', 'DUS', 'KG', 'PACK', 'LITER', 'BOTOL', 'KOTAK', 'KALENG'];
+        $data['list_satuan'] = ['SACHET', 'SLOP', 'BUNGKUS', 'PCS', 'SACK', 'KARUNG', 'DUS', 'KG', 'PACK', 'LITER', 'BOTOL', 'KOTAK', 'KALENG'];
         $data['list_kategori'] = ['SABUN', 'MINYAK', 'BERAS', 'PASTA GIGI', 'ROKOK', 'CEMILAN', 'PENYEDAP RASA', 'KECAP & SAUS', 'SUSU', 'KOPI', 'TEH', 'SHAMPOO', 'SAGU & TEPUNG', 'GULA', 'BIHUN', 'MINUMAN', 'MIE'];
 
         return view('barang_edit', $data);
@@ -101,7 +110,9 @@ class BarangController extends Controller
             'kode_barang' => 'required|string|max:255',
             'nama_barang' => 'required|string|max:255',
             'satuan' => 'required|string',
-            'harga' => 'required|numeric', // Memastikan harga adalah angka dan tidak negatif
+            'stok' => 'required|numeric|min:1',
+            'harga_jual' => 'required|numeric', // Validasi harga harus ada dan numeric
+            'harga_beli' => 'required|numeric',
         ]);
         // Peta kode kategori ke nama kategori
         $kodeKategoriMap = [
@@ -132,7 +143,8 @@ class BarangController extends Controller
         // Update data barang
         $barang = Barang::findOrFail($id);
         $barang->update(array_merge($request->all(), ['kategori_barang' => $kategori_barang]));
-        $barang->harga = $request->harga;
+        $barang->harga_jual = $request->harga_jual;
+        $barang->harga_beli = $request->harga_beli;
 
         // Redirect ke halaman daftar barang
         return redirect()->route('barang.index')

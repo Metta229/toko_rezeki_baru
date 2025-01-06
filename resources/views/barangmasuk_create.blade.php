@@ -1,14 +1,14 @@
 @extends('layouts.sba')
 
 @section('isinya')
-<div class="container-fluid mt-4">
+<div class="mt-4 container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white text-center">
+            <div class="border-0 shadow-lg card">
+                <div class="text-center text-white card-header bg-primary">
                     <h2>Tambah Data Barang</h2>
                 </div>
-                <div class="card-body p-4">
+                <div class="p-4 card-body">
                     <form method="POST" action="{{ route('barangmasuk.store') }}">
                         @csrf
                         <!-- Tanggal -->
@@ -23,7 +23,8 @@
                         <div class="form-group">
                             <label for="supplier_id">Pilih Supplier <strong style="color: red; font-weight: bold">*Wajib
                                     Dipilih</strong></label>
-                            {!! Form::select('supplier_id', $supplier_id, null, ['class' => 'form-control', 'placeholder' =>
+                            {!! Form::select('supplier_id', $supplier_id, null, ['class' => 'form-control',
+                            'placeholder' =>
                             'Pilih Supplier']) !!}
                         </div>
 
@@ -71,7 +72,7 @@
                         </div>
 
                         <!-- Tombol Simpan -->
-                        <div class="form-group text-center">
+                        <div class="text-center form-group">
                             <button type="submit" class="btn btn-primary">Simpan Data</button>
                         </div>
                     </form>

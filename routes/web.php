@@ -1,12 +1,12 @@
 <?php
 
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\BarangMasukController;
-use App\Http\Controllers\BarangKeluarController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\LaporanController;
 
 Route::middleware(['auth'])->group(function () {
     // Rute Barang
@@ -26,7 +26,8 @@ Route::middleware(['auth'])->group(function () {
     // Rute Barang Masuk
     Route::resource('barangmasuk', BarangMasukController::class);
     Route::put('/barangmasuk/{id}', [BarangMasukController::class, 'update'])->name('barangmasuk.update');
-    Route::get('barangmasuk/{id}/edit', [BarangMasukController::class, 'edit'])->name('barangmasuk.edit');
+    Route::put('/barangmasuk/{id}', [BarangMasukController::class, 'update'])->name('barangmasuk.update');
+
     Route::delete('barangmasuk/{id}', [BarangMasukController::class, 'delete'])->name('barangmasuk.delete');
 
     // Rute Barang Keluar

@@ -1,23 +1,23 @@
 @extends('layouts.sba')
 
 @section('isinya')
-<div class="container-fluid mt-4">
+<div class="mt-4 container-fluid">
     <div class="row">
 
         <!-- Alert Section -->
         <div class="col-md-12">
-            <div class="alert alert-info w-100 mb-3" role="alert">
+            <div class="mb-3 alert alert-info w-100" role="alert">
                 Untuk kode barang, silahkan lihat pada tabel data barang di samping form
             </div>
         </div>
 
         <!-- Form Card Section -->
         <div class="col-md-6">
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white text-center">
+            <div class="border-0 shadow-lg card">
+                <div class="text-center text-white card-header bg-primary">
                     <h2>Tambah Data Barang</h2>
                 </div>
-                <div class="card-body p-4">
+                <div class="p-4 card-body">
                     <form action="{{ route('barang.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
@@ -50,10 +50,30 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="harga">Harga</label>
-                            <input id="harga" class="form-control" type="number" name="harga" value="{{ old('harga') }}"
-                                required>
-                            @error('harga')
+                            <label for="stok">Stok Saat ini</label>
+                            <input type="number" name="stok" class="form-control" value="{{ old('stok') }}" required
+                                min="1">
+                            @error('stok')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="harga_beli">Harga Beli</label>
+                            {!! Form::number('harga_beli', null, ['class' => 'form-control', 'step' => '0.01',
+                            'required' =>
+                            true]) !!}
+                            @error('harga_beli')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <!-- Harga -->
+                        <div class="form-group">
+                            <label for="harga_jual">Harga Jual</label>
+                            {!! Form::number('harga_jual', null, ['class' => 'form-control', 'step' => '0.01',
+                            'required' =>
+                            true]) !!}
+                            @error('harga_jual')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
@@ -66,11 +86,11 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white text-center">
+            <div class="border-0 shadow-lg card">
+                <div class="text-center text-white card-header bg-primary">
                     <h2>Data Barang</h2>
                 </div>
-                <div class="card-body p-2">
+                <div class="p-2 card-body">
                     <table class="table table-sm table-bordered">
                         <thead>
                             <tr class="text-center">

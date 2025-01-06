@@ -11,22 +11,18 @@ class AddTimestampsTobarangTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::table('barang', function (Blueprint $table) {
-            $table->timestamps(); // Menambahkan kolom created_at dan updated_at
-        });
-    }
+    public function up(): void
+{
+    Schema::table('barangmasuk', function (Blueprint $table) {
+        $table->bigInteger('supplier_id')->nullable()->after('column_name'); // Sesuaikan dengan urutan kolom yang diinginkan
+    });
+}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::table('barang', function (Blueprint $table) {
-            $table->dropTimestamps();
-        });
-    }
+public function down(): void
+{
+    Schema::table('barangmasuk', function (Blueprint $table) {
+        $table->dropColumn('supplier_id');
+    });
+}
+
 }

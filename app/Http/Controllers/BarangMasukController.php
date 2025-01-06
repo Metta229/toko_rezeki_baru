@@ -13,12 +13,13 @@ class BarangMasukController extends Controller
     {
         $data['barangmasuk'] = BarangMasuk::with(['supplier', 'barang'])->paginate(5);
         $data['judul'] = 'Data Barang Masuk';
+
         return view('barangmasuk_index', $data);
     }
 
     public function create()
     {
-        $data['list_satuan'] = ['Sachet', 'Slop', 'Bungkus', 'PCS', 'Karung', 'DUS', 'Kilogram', 'Pack', 'Liter', 'Botol', 'Kotak', 'Kaleng'];
+        $data['list_satuan'] = ['SACHET', 'SLOP', 'BUNGKUS', 'PCS', 'SACK', 'KARUNG', 'DUS', 'KG', 'PACK', 'LITER', 'BOTOL', 'KOTAK', 'KALENG'];
         $supplier = Supplier::selectRaw("id, concat(kode_supplier,' - ',nama_supplier) as tampil")->pluck('tampil', 'id');
         $barang = Barang::selectRaw("id, concat(kode_barang,' - ',nama_barang) as tampil")->pluck('tampil', 'id');
 
@@ -46,7 +47,7 @@ class BarangMasukController extends Controller
         ]);
 
         // Menyimpan data barang masuk
-        $barangMasuk = new BarangMasuk();
+        $barangMasuk = new BarangMasuk;
         $barangMasuk->supplier_id = $request->supplier_id;
         $barangMasuk->barang_id = $request->barang_id;
         $barangMasuk->tanggal = $request->tanggal;
@@ -60,23 +61,23 @@ class BarangMasukController extends Controller
 
     public function edit($id)
     {
-        $st = ['Sachet', 'Slop', 'Bungkus', 'PCS', 'Karung', 'DUS', 'Kilogram', 'Pack', 'Liter', 'Botol', 'Kotak', 'Kaleng'];
+        $st = ['SACHET', 'SLOP', 'BUNGKUS', 'PCS', 'SACK', 'KARUNG', 'DUS', 'KG', 'PACK', 'LITER', 'BOTOL', 'KOTAK', 'KALENG'];
 
         // Ambil data barang masuk berdasarkan id
         $barangmasuk = BarangMasuk::findOrFail($id);
 
-        // Ambil semua supplier dan barang untuk dropdown
-        $supplier = Supplier::all();
-        $barang = Barang::all(); // Ambil semua barang
+        // Ambil semua supplier untuk dropdown
+        $supplier = Supplier::pluck('nama_supplier', 'id');
+
+        // Ambil semua barang untuk dropdown
+        $barang = Barang::pluck('nama_barang', 'id');
 
         // Kirim data ke view
         return view('barangmasuk_edit', [
             'judul' => 'Edit Barang Masuk',
-            'alamat_rute' => 'barangmasuk.update',
-            'cara' => 'PUT',
             'barangmasuk' => $barangmasuk,
-            'supplier' => $supplier,
-            'barang' => $barang, // Kirim data barang ke view
+            'supplier_id' => $supplier, // Data supplier
+            'barang_id' => $barang, // Data barang
             'st' => $st,
         ]);
     }
@@ -84,6 +85,7 @@ class BarangMasukController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            'supplier_id' => 'required',
             'tanggal' => 'required|date',
             'nama_supplier' => 'required|string',  // Menggunakan nama_supplier
             'nama_barang' => 'required|string',    // Menggunakan nama_barang

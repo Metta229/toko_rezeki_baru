@@ -1,0 +1,85 @@
+@extends('layouts.sba')
+
+@section('isinya')
+<div class="mt-4 container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="border-0 shadow-lg card">
+                <div class="text-center text-white card-header bg-primary">
+                    <h2>Tambah Data Barang</h2>
+                </div>
+                <div class="p-4 card-body">
+                    <form method="POST" action="{{ route('barangkeluar.store') }}">
+                        @csrf
+                        <!-- Tanggal -->
+                        <div class="form-group">
+                            <label for="tanggal">Tanggal</label>
+                            <input type="date" name="tanggal" class="form-control" value="{{ old('tanggal') }}">
+                            @error('tanggal')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="supplier_id">Pilih Supplier <strong style="color: red; font-weight: bold">*Wajib
+                                    Dipilih</strong></label>
+                            {!! Form::select('supplier_id', $supplier_id, null, ['class' => 'form-control',
+                            'placeholder' =>
+                            'Pilih Supplier']) !!}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="barang_id">Pilih Barang <strong style="color: red; font-weight: bold">*Wajib
+                                    Dipilih</strong></label>
+                            {!! Form::select('barang_id', $barang_id, null, ['class' => 'form-control', 'placeholder' =>
+                            'Pilih Barang']) !!}
+                        </div>
+
+                        <!-- Stok Masuk -->
+                        <div class="form-group">
+                            <label for="Jumlah_keluar">Jumlah Keluar</label>
+                            <input type="number" name="Jumlah_keluar" class="form-control"
+                                value="{{ old('Jumlah_keluar') }}" required min="1">
+                            @error('Jumlah_keluar')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Harga -->
+                        <div class="form-group">
+                            <label for="harga">Harga</label>
+                            <input type="number" name="harga" class="form-control" value="{{ old('harga') }}" required
+                                min="0">
+                            @error('harga')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Satuan -->
+                        <div class="form-group">
+                            <label for="satuan">Satuan</label>
+                            <select name="satuan" class="form-control" required>
+                                <option value="">Pilih Satuan</option>
+                                @foreach($list_satuan as $satuan)
+                                <option value="{{ $satuan }}" @selected(old('satuan')==$satuan)>
+                                    {{ $satuan }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('satuan')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Tombol Simpan -->
+                        <div class="text-center form-group">
+                            <button type="submit" class="btn btn-primary">Simpan Data</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

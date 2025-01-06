@@ -1,14 +1,14 @@
 @extends('layouts.sba')
 
 @section('isinya')
-<div class="container-fluid mt-4">
+<div class="mt-4 container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white text-center">
+            <div class="border-0 shadow-lg card">
+                <div class="text-center text-white card-header bg-primary">
                     <h2>Edit Supplier</h2>
                 </div>
-                <div class="card-body p-4">
+                <div class="p-4 card-body">
                     <!-- Form untuk edit supplier -->
                     <form method="POST" action="{{ route('supplier.update', $supplier->id) }}">
                         @csrf

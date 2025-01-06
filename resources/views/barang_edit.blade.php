@@ -12,14 +12,14 @@
     </style>
 </head>
 
-<div class="container-fluid mt-4">
+<div class="mt-4 container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="card shadow-lg border-0">
-                <div class="card-header bg-primary text-white text-center">
+            <div class="border-0 shadow-lg card">
+                <div class="text-center text-white card-header bg-primary">
                     <h2>Edit Barang</h2>
                 </div>
-                <div class="card-body p-4">
+                <div class="p-4 card-body">
                     <form method="POST" action="{{ route('barang.update', $barang->id) }}">
                         @csrf
                         @method('PUT')
@@ -34,7 +34,7 @@
                                 value="{{ $barang->nama_barang }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="satuan" class="font-weight-bold">Satuan</label> <!-- Apply the class here -->
+                            <label for="satuan">Satuan</label> <!-- Apply the class here -->
                             <select name="satuan" id="satuan" class="form-control" required>
                                 <option value="">Pilih Satuan</option>
                                 @foreach ($list_satuan as $satuan)
@@ -45,10 +45,31 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="harga">Harga</label> <!-- Kolom Harga baru -->
-                            <input id="harga" class="form-control" type="number" name="harga" value="{{ old('harga') }}"
-                                required>
-                            @error('harga')
+                            <label for="stok">Stok Saat ini</label>
+                            <input type="number" name="stok" class="form-control" value="{{ old('stok') }}" required
+                                min="1">
+                            @error('stok')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+                        <!-- Harga -->
+                        <div class="form-group">
+                            <label for="harga_beli">Harga Beli</label>
+                            {!! Form::number('harga_beli', null, ['class' => 'form-control', 'step' => '0.01',
+                            'required' =>
+                            true]) !!}
+                            @error('harga_beli')
+                            <small class="text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <!-- Harga -->
+                        <div class="form-group">
+                            <label for="harga_jual">Harga Jual</label>
+                            {!! Form::number('harga_jual', null, ['class' => 'form-control', 'step' => '0.01',
+                            'required' =>
+                            true]) !!}
+                            @error('harga_jual')
                             <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>

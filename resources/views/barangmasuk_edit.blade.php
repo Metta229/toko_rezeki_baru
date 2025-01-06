@@ -2,10 +2,10 @@
 
 @section('isinya')
 
-<div class="container-fluid mt-4">
+<div class="mt-4 container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="card shadow-lg border-0">
+            <div class="border-0 shadow-lg card">
                 <div class="card-header">
                     <center>
                         <h3><b>{{ $judul }}</b></h3>
@@ -19,7 +19,7 @@
                     'route' => ['barangmasuk.update', $barangmasuk->id],
                     'method' => 'PUT',
                     'enctype' => 'multipart/form-data',
-                    'id' => 'barangForm'
+                    'id' => 'barangmasukForm'
                     ]) !!}
                     @csrf
 
@@ -33,16 +33,19 @@
                         @enderror
                     </div>
 
-                    <!--Nama Supplier-->
                     <div class="form-group">
-                        <label for="nama_supplier">Nama Supplier</label>
-                        {!! Form::text('nama_supplier', null, ['class' => 'form-control', 'required' => true]) !!}
+                        <label for="supplier_id">Pilih Supplier <strong style="color: red; font-weight: bold">*Wajib
+                                Dipilih</strong></label>
+                        {!! Form::select('supplier_id', $supplier_id, null, ['class' => 'form-control',
+                        'placeholder' =>
+                        'Pilih Supplier']) !!}
                     </div>
 
-                    <!-- Nama Barang -->
                     <div class="form-group">
-                        <label for="nama_barang">Nama Barang</label>
-                        {!! Form::text('nama_barang', null, ['class' => 'form-control', 'required' => true]) !!}
+                        <label for="barang_id">Pilih Barang <strong style="color: red; font-weight: bold">*Wajib
+                                Dipilih</strong></label>
+                        {!! Form::select('barang_id', $barang_id, null, ['class' => 'form-control', 'placeholder' =>
+                        'Pilih Barang']) !!}
                     </div>
 
                     <!-- Harga -->
@@ -83,7 +86,7 @@
                     </div>
 
                     <!-- Submit Button -->
-                    <div class="form-group text-right">
+                    <div class="text-right form-group">
                         {!! Form::submit('Simpan', ['class' => 'btn btn-primary']) !!}
                     </div>
 
